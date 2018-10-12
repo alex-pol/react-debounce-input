@@ -51,15 +51,15 @@ export class DebounceInput extends React.PureComponent {
     this.createNotifier(this.props.debounceTimeout);
   }
 
-
-  componentWillReceiveProps({value, debounceTimeout}) {
+  componentDidUpdate(prevProps, prevState) {
+    const { value, debounceTimeout } = this.props;
     if (this.isDebouncing) {
       return;
     }
-    if (typeof value !== 'undefined' && this.state.value !== value) {
+    if (typeof value !== 'undefined' && prevState.value !== value) {
       this.setState({value});
     }
-    if (debounceTimeout !== this.props.debounceTimeout) {
+    if (prevProps.debounceTimeout !== debounceTimeout) {
       this.createNotifier(debounceTimeout);
     }
   }
